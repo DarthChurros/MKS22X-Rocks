@@ -50,6 +50,10 @@ class Ball extends Thing implements Moveable {
 
     super(x, y);
   }
+  Ball(float x, float y, float xinc, float yinc){
+    super(x,y,xinc,yinc);
+  }
+  
 
   void display() {
     fill(255,0,0);
@@ -58,8 +62,19 @@ class Ball extends Thing implements Moveable {
 
   void move() {
     /* ONE PERSON WRITE THIS */
-    x+=random(2)-1;
-    y+=random(2)-1;
+    //part a
+    //x+=random(2)-1;
+    //y+=random(2)-1;
+    //part b
+    if (x < 0||x>width){
+      xinc=-xinc;
+    }
+    if (y < 0||y>height){
+      yinc=-yinc;
+    }
+    x+=xinc;
+    y+=yinc;
+    
   }
 }
 
@@ -74,7 +89,7 @@ void setup() {
   thingsToDisplay = new ArrayList<Displayable>();
   thingsToMove = new ArrayList<Moveable>();
   for (int i = 0; i < 10; i++) {
-    Ball b = new Ball(50+random(width-100), 50+random(height-100));
+    Ball b = new Ball(50+random(width-100), 50+random(height-100), random(10), random(10));
     thingsToDisplay.add(b);
     thingsToMove.add(b);
     Rock r = new Rock(50+random(width-100), 50+random(height-100));
