@@ -46,13 +46,14 @@ public class LivingRock extends Rock implements Moveable {
 }
 
 class Ball extends Thing implements Moveable {
+  int col;
   Ball(float x, float y) {
-
     super(x, y);
+    col = (int)random(3);
   }
 
   void display() {
-    switch((int)random(3)) {
+    switch(col) {
       case 0: fill(255,0,0);
       break;
       case 1: fill(0,255,0);
