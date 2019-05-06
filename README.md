@@ -1,2 +1,2 @@
 # MKS22X-Rocks
-ROCKS.
+This repository blatantly discriminates against the Ball class.
