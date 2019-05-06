@@ -8,11 +8,18 @@ interface Moveable {
 
 abstract class Thing implements Displayable {
   float x, y;//Position of the Thing
+  float xinc, yinc; //increments
 
   Thing(float x, float y) {
     this.x = x;
     this.y = y;
   }
+  Thing(float x, float y, float xinc, float yinc){
+    this.x = x; 
+    this.y = y;
+    this.xinc = xinc;
+    this.yinc = yinc;
+    }
   abstract void display();
 }
 
