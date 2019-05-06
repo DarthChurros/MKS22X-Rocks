@@ -49,6 +49,8 @@ class Ball extends Thing implements Moveable {
 
   void move() {
     /* ONE PERSON WRITE THIS */
+    x+=random(2)-1;
+    y+=random(2)-1;
   }
 }
 
