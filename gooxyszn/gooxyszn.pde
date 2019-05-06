@@ -31,7 +31,9 @@ public class LivingRock extends Rock implements Moveable {
     super(x, y);
   }
   void move() {
-    /* ONE PERSON WRITE THIS */
+    if (dist(x, y, mouseX, mouseY) <= 100){
+      y++;
+    }
   }
 }
 
