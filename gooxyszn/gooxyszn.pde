@@ -70,6 +70,15 @@ class Ball extends Thing implements Moveable {
     }
     
     circle(x,y,30);
+    
+    switch(col) {
+      case 1: fill(255,0,0);
+      break;
+      case 2: fill(0,255,0);
+      break;
+      case 0: fill(0,0,255);
+    }
+    circle(x,y,15);
   }
 
   void move() {
