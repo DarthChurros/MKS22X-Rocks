@@ -33,36 +33,17 @@ class Rock extends Thing {
   void display() {
     /* ONE PERSON WRITE THIS */
     //________rock with moss____
-      int r = 34;
-      int g = 139;
-      int b = 34;
-      fill(192, 192, 192);
-      ellipse(x, y, 50, 30);
-      //moss changes color when it reaches the edge
-      if(x + 25>= width || y+15 >= width || x-25 <= 0 || y-15 <= 0) {
-        r = (int)random(255);
-        g = (int)random(255);
-        b = (int)random(255);
-      }
-      fill(r,g,b);
-      //moss
-      noStroke();
-      beginShape();
-      vertex(x-20, y-10);
-      bezierVertex(x-20, y-10, x, y-20, x+20, y-10);
-      vertex(x+20, y-10);
-      endShape();
-      triangle(x, y-10, x - 10, y, x - 20, y-10);
-      triangle(x-10, y-10, x, y, x + 10, y-10);
-      triangle(x, y-10, x + 10, y, x + 20, y-10);
-    //image of Dwayne Johnson 
-    image(image, x, y, 50, 50);
+    image(image, x -25 , y - 25, 50, 50);
   }
 }
 
 public class LivingRock extends Rock implements Moveable {
-  LivingRock(float x, float y,  PImage image) {
+  PImage eyeImage;
+  LivingRock(float x, float y,  PImage image, PImage eyeimg) {
     super(x, y, image);
+    eyeImage = eyeimg;
+    
+    
   }
   void move() {
     float d = dist(x, y, mouseX, mouseY);
@@ -70,6 +51,10 @@ public class LivingRock extends Rock implements Moveable {
        if (x + 30 <= width && x - 30 >= 0) x += ((x - mouseX) / sq(.15 * d)) ;
       if (y + 20 <= height && y - 20 >= 0)y += ((y - mouseY) / sq(.15 * d)) ;
     }
+  }
+  void display(){
+      super.display();
+      image(eyeImage, x -25 , y - 25, 50, 50);
   }
 }
 
@@ -139,9 +124,9 @@ void setup() {
 
   thingsToDisplay = new ArrayList<Displayable>();
   thingsToMove = new ArrayList<Moveable>();
-    PImage theRock;
-    theRock = loadImage("theRock.jpg");
     PImage rockimg;
+    PImage eyeimg;
+    eyeimg = loadImage("eyes.png");
   for (int i = 0; i < 10; i++) {
     rockimg = (random(1) > 0.5) ? loadImage("rock1.png") : loadImage("rock2.png");
     Ball b = new Ball(50+random(width-100), 50+random(height-100), random(10), random(10));
@@ -152,7 +137,7 @@ void setup() {
   }
   for (int i = 0; i < 3; i++) {
     rockimg = (random(1) > 0.5) ? loadImage("rock1.png") : loadImage("rock2.png");
-    LivingRock m = new LivingRock(50+random(width-100), 50+random(height-100), rockimg);
+    LivingRock m = new LivingRock(50+random(width-100), 50+random(height-100), rockimg, eyeimg);
     thingsToDisplay.add(m);
     thingsToMove.add(m);
   }
