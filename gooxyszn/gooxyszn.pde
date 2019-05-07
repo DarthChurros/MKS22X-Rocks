@@ -33,6 +33,10 @@ class Rock extends Thing implements Collideable {
   boolean isTouching(Thing other) {
     return (dist(x,y,other.x,other.y) <= 25);
   }
+  
+  boolean isTouching(Thing other) {
+    return (dist(x,y,other.x,other.y) <= 25);
+  }
 
   void display() {
     /* ONE PERSON WRITE THIS */
@@ -146,9 +150,12 @@ void setup() {
 
   thingsToDisplay = new ArrayList<Displayable>();
   thingsToMove = new ArrayList<Moveable>();
+<<<<<<< HEAD
     PImage rockimg;
     PImage eyeimg;
     eyeimg = loadImage("eyes.png");
+=======
+>>>>>>> 56b2111... added ball collisions
   listOfCollideables = new ArrayList<Collideable>();
   for (int i = 0; i < 10; i++) {
     rockimg = (random(1) > 0.5) ? loadImage("rock1.png") : loadImage("rock2.png");
