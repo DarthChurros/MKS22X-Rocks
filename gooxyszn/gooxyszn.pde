@@ -30,11 +30,29 @@ class Rock extends Thing {
 
   void display() {
     /* ONE PERSON WRITE THIS */
-    fill(0, 255, 0);
-    ellipse(x, y, 50, 50);
-    //ellipse(x+10, y+5, 10, 10);
-    //ellipse(x+35, y+5, 10, 10);
-    //line(x+20, y+ 40, x+40, y+40);
+    int r = 34;
+    int g = 139;
+    int b = 34;
+    fill(192, 192, 192);
+    ellipse(x, y, 50, 30);
+    //moss changes color when it reaches the edge
+    if(x + 25>= width || y+15 >= width || x-25 <= 0 || y-15 <= 0) {
+      r = (int)random(255);
+      g = (int)random(255);
+      b = (int)random(255);
+    }
+    fill(r,g,b);
+    //moss
+    noStroke();
+    beginShape();
+    vertex(x-20, y-10);
+    bezierVertex(x-20, y-10, x, y-20, x+20, y-10);
+    vertex(x+20, y-10);
+    endShape();
+    triangle(x, y-10, x - 10, y, x - 20, y-10);
+    triangle(x-10, y-10, x, y, x + 10, y-10);
+    triangle(x, y-10, x + 10, y, x + 20, y-10);
+    
   }
 }
 
@@ -69,7 +87,7 @@ class Ball extends Thing implements Moveable {
       case 2: fill(0,0,255);
     }
     
-    circle(x,y,30);
+    ellipse(x,y,30,30);
     
     switch(col) {
       case 1: fill(255,0,0);
@@ -78,7 +96,7 @@ class Ball extends Thing implements Moveable {
       break;
       case 0: fill(0,0,255);
     }
-    circle(x,y,15);
+    ellipse(x,y,15,15);
   }
 
   void move() {
