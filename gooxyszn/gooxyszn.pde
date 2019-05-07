@@ -24,8 +24,10 @@ abstract class Thing implements Displayable {
 }
 
 class Rock extends Thing {
-  Rock(float x, float y) {
+  PImage image;
+  Rock(float x, float y, PImage image) {
     super(x, y);
+    this.image = image;
   }
 
   void display() {
@@ -54,15 +56,13 @@ class Rock extends Thing {
       triangle(x-10, y-10, x, y, x + 10, y-10);
       triangle(x, y-10, x + 10, y, x + 20, y-10);
     //image of Dwayne Johnson 
-    //PImage theRock;
-    //theRock = loadImage("theRock.jpg");
-    //image(theRock, x, y, 50, 50);
+    image(image, x, y, 50, 50);
   }
 }
 
 public class LivingRock extends Rock implements Moveable {
-  LivingRock(float x, float y) {
-    super(x, y);
+  LivingRock(float x, float y,  PImage image) {
+    super(x, y, image);
   }
   void move() {
     float d = dist(x, y, mouseX, mouseY);
@@ -139,15 +139,20 @@ void setup() {
 
   thingsToDisplay = new ArrayList<Displayable>();
   thingsToMove = new ArrayList<Moveable>();
+    PImage theRock;
+    theRock = loadImage("theRock.jpg");
+    PImage rockimg;
   for (int i = 0; i < 10; i++) {
+    rockimg = (random(1) > 0.5) ? loadImage("rock1.png") : loadImage("rock2.png");
     Ball b = new Ball(50+random(width-100), 50+random(height-100), random(10), random(10));
     thingsToDisplay.add(b);
     thingsToMove.add(b);
-    Rock r = new Rock(50+random(width-100), 50+random(height-100));
+    Rock r = new Rock(50+random(width-100), 50+random(height-100), rockimg);
     thingsToDisplay.add(r);
   }
   for (int i = 0; i < 3; i++) {
-    LivingRock m = new LivingRock(50+random(width-100), 50+random(height-100));
+    rockimg = (random(1) > 0.5) ? loadImage("rock1.png") : loadImage("rock2.png");
+    LivingRock m = new LivingRock(50+random(width-100), 50+random(height-100), rockimg);
     thingsToDisplay.add(m);
     thingsToMove.add(m);
   }
