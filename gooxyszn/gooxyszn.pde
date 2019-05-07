@@ -91,7 +91,7 @@ class Ball extends Thing implements Moveable {
       fill(255, 0, 0);
       break;
     case 1: 
-      fill(0, 255, 0);
+      fill(127, 0, 255);
       break;
     case 2: 
       fill(0, 0, 255);
@@ -104,7 +104,7 @@ class Ball extends Thing implements Moveable {
       fill(0, 255, 0);
       break;
     case 1: 
-      fill(255, 0, 0);
+      fill(255, 255, 0);
       break;
     case 2: 
       fill(255, 127, 0);
