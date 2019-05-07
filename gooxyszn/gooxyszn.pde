@@ -77,10 +77,11 @@ class Ball extends Thing implements Moveable {
   int col;
   Ball(float x, float y) {
     super(x, y);
-    col = (int)random(3);
+    col = int(random(3));
   }
   Ball(float x, float y, float xinc, float yinc) {
     super(x, y, xinc, yinc);
+    col = int(random(3));
   }
 
 
@@ -99,16 +100,16 @@ class Ball extends Thing implements Moveable {
     ellipse(x, y, 30, 30);
 
     switch(col) {
+    case 0: 
+      fill(0, 255, 0);
+      break;
     case 1: 
       fill(255, 0, 0);
       break;
     case 2: 
-      fill(0, 255, 0);
-      break;
-    case 0: 
-      fill(0, 0, 255);
+      fill(255, 127, 0);
     }
-    ellipse(x, y, 15, 15);
+    ellipse(x, y, 20, 20);
   }
 
   void move() {
