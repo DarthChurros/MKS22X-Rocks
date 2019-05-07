@@ -6,6 +6,11 @@ interface Moveable {
   void move();
 }
 
+
+interface Collideable {
+  boolean isTouching(Thing other);
+}
+
 abstract class Thing implements Displayable {
   float x, y;//Position of the Thing
   float xinc, yinc; //increments
