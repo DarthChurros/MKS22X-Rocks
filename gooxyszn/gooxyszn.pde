@@ -81,9 +81,8 @@ class Ball extends Thing implements Moveable {
     super(x, y, xinc, yinc);
     col = int(random(3));
   }
-
-
-  void display() {
+  
+  void chooseColor(){
     if (timer > 0) {
       fill(255, 0, 0);
       ellipse(x, y, 30, 30);
@@ -113,6 +112,11 @@ class Ball extends Thing implements Moveable {
     case 2: 
       fill(255, 127, 0);
     }
+  }
+
+
+  void display() {
+    chooseColor();
     ellipse(x, y, 20, 20);
   }
 
@@ -144,6 +148,31 @@ class Ball extends Thing implements Moveable {
   }
 }
 
+class GravityBall extends Ball{
+  float gforce;
+  GravityBall(float x, float y){
+    super(x,y);
+    gforce = random(0.7);
+  }
+  GravityBall(float x, float y, float xinc, float yinc){
+    super(x,y,xinc,yinc);
+    gforce = random(0.7);
+  }
+  void move(){
+    super.move();
+    yinc+= gforce;
+  }
+  void display(){
+    chooseColor();
+    beginShape();
+    vertex(x, y+15);
+    vertex(x-7.5,y-sqrt(3)*7.5);
+    vertex(x, y-7.5);
+    vertex(x+7.5,y-sqrt(3)*7.5);
+    endShape(CLOSE);
+  }
+}
+
 /*DO NOT EDIT THE REST OF THIS */
 
 ArrayList<Displayable> thingsToDisplay;
@@ -161,7 +190,12 @@ void setup() {
   listOfCollideables = new ArrayList<Collideable>();
   for (int i = 0; i < 10; i++) {
     rockimg = (random(1) > 0.5) ? loadImage("rock1.png") : loadImage("rock2.png");
-    Ball b = new Ball(50+random(width-100), 50+random(height-100), random(10), random(10));
+    Ball b;
+    if (i % 2 == 1){
+      b = new Ball(50+random(width-100), 50+random(height-100), random(10), random(10));
+    }else{
+      b = new GravityBall(50+random(width-100), 50+random(height-100), random(10), random(10));
+    }
     thingsToDisplay.add(b);
     thingsToMove.add(b);
     Rock r = new Rock(50+random(width-100), 50+random(height-100), rockimg);
