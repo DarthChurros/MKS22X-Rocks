@@ -48,6 +48,7 @@ class Rock extends Thing implements Collideable {
 
 public class LivingRock extends Rock implements Moveable {
   PImage eyeImage;
+  
   LivingRock(float x, float y,  PImage image, PImage eyeimg) {
     super(x, y, image);
     eyeImage = eyeimg;
@@ -57,8 +58,11 @@ public class LivingRock extends Rock implements Moveable {
     float d = dist(x, y, mouseX, mouseY);
     if (d <= 100) {
        if (x + 30 <= width && x - 30 >= 0) x += ((x - mouseX) / sq(.15 * d)) ;
-      if (y + 20 <= height && y - 20 >= 0)y += ((y - mouseY) / sq(.15 * d)) ;
-    }
+       if (y + 20 <= height && y - 20 >= 0) y += ((y - mouseY) / sq(.15 * d)) ;
+       if (x + 30 > width || x - 30 < 0) x -= ((x - mouseX) / sq(.15 * d));
+       if (y + 20 > height || y - 20 < 0) y -= ((y-mouseY) / sq(.15 * d));
+    } 
+    
   }
   void display(){
       super.display();
