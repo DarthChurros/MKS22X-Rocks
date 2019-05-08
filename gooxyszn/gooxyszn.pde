@@ -23,11 +23,15 @@ abstract class Thing implements Displayable {
   abstract void display();
 }
 
-class Rock extends Thing {
+class Rock extends Thing implements Collideable {
   PImage image;
   Rock(float x, float y, PImage image) {
     super(x, y);
     this.image = image;
+  }
+  
+  boolean isTouching(Thing other) {
+    return (dist(x,y,other.x,other.y) <= 25);
   }
 
   void display() {
@@ -59,6 +63,7 @@ public class LivingRock extends Rock implements Moveable {
 
 class Ball extends Thing implements Moveable {
   int col;
+  int timer;
   Ball(float x, float y) {
     super(x, y);
     col = int(random(3));
@@ -70,6 +75,12 @@ class Ball extends Thing implements Moveable {
 
 
   void display() {
+    if (timer > 0) {
+      fill(255, 0, 0);
+      ellipse(x, y, 30, 30);
+      timer--;
+      return;
+    }
     switch(col) {
     case 0: 
       fill(255, 0, 0);
@@ -108,6 +119,17 @@ class Ball extends Thing implements Moveable {
     if (y < 0||y>height) {
       yinc=-yinc;
     }
+    for (Collideable c : listOfCollideables) {
+      if (c.isTouching(this)) {
+        fill(255, 0, 0);
+        ellipse(x, y, 30, 30);
+        xinc*=random(-10)/abs(xinc);
+        yinc*=random(-10)/abs(yinc);
+        x+=xinc/abs(xinc)*10;
+        y+=yinc/abs(yinc)*10;
+        timer = 15;
+      }
+    }
     x+=xinc;
     y+=yinc;
   }
@@ -117,6 +139,7 @@ class Ball extends Thing implements Moveable {
 
 ArrayList<Displayable> thingsToDisplay;
 ArrayList<Moveable> thingsToMove;
+ArrayList<Collideable> listOfCollideables;
 
 void setup() {
   size(1000, 800);
@@ -126,6 +149,7 @@ void setup() {
     PImage rockimg;
     PImage eyeimg;
     eyeimg = loadImage("eyes.png");
+  listOfCollideables = new ArrayList<Collideable>();
   for (int i = 0; i < 10; i++) {
     rockimg = (random(1) > 0.5) ? loadImage("rock1.png") : loadImage("rock2.png");
     Ball b = new Ball(50+random(width-100), 50+random(height-100), random(10), random(10));
@@ -133,12 +157,14 @@ void setup() {
     thingsToMove.add(b);
     Rock r = new Rock(50+random(width-100), 50+random(height-100), rockimg);
     thingsToDisplay.add(r);
+    listOfCollideables.add(r);
   }
   for (int i = 0; i < 3; i++) {
     rockimg = (random(1) > 0.5) ? loadImage("rock1.png") : loadImage("rock2.png");
     LivingRock m = new LivingRock(50+random(width-100), 50+random(height-100), rockimg, eyeimg);
     thingsToDisplay.add(m);
     thingsToMove.add(m);
+    listOfCollideables.add(m);
   }
 }
 void draw() {
