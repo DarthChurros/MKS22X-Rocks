@@ -38,10 +38,6 @@ class Rock extends Thing implements Collideable {
   boolean isTouching(Thing other) {
     return (dist(x,y,other.x,other.y) <= 25);
   }
-  
-  boolean isTouching(Thing other) {
-    return (dist(x,y,other.x,other.y) <= 25);
-  }
 
   void display() {
     /* ONE PERSON WRITE THIS */
