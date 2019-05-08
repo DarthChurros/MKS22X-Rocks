@@ -148,11 +148,11 @@ class GravityBall extends Ball{
   float gforce;
   GravityBall(float x, float y){
     super(x,y);
-    gforce = random(.01, .1);
+    gforce = random(0.7);
   }
   GravityBall(float x, float y, float xinc, float yinc){
     super(x,y,xinc,yinc);
-    gforce = random(5, 15);
+    gforce = random(0.7);
   }
   void move(){
     super.move();
