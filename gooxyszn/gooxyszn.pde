@@ -41,7 +41,7 @@ public class LivingRock extends Rock implements Moveable {
   PImage eyeImage;
   LivingRock(float x, float y,  PImage image, PImage eyeimg) {
     super(x, y, image);
-    
+    eyeImage = eyeimg;
     
   }
   void move() {
