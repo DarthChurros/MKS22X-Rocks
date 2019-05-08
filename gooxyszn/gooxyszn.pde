@@ -155,12 +155,9 @@ void setup() {
 
   thingsToDisplay = new ArrayList<Displayable>();
   thingsToMove = new ArrayList<Moveable>();
-<<<<<<< HEAD
     PImage rockimg;
     PImage eyeimg;
     eyeimg = loadImage("eyes.png");
-=======
->>>>>>> 56b2111... added ball collisions
   listOfCollideables = new ArrayList<Collideable>();
   for (int i = 0; i < 10; i++) {
     rockimg = (random(1) > 0.5) ? loadImage("rock1.png") : loadImage("rock2.png");
