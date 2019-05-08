@@ -77,9 +77,8 @@ class Ball extends Thing implements Moveable {
     super(x, y, xinc, yinc);
     col = int(random(3));
   }
-
-
-  void display() {
+  
+  void chooseColor(){
     if (timer > 0) {
       fill(255, 0, 0);
       ellipse(x, y, 30, 30);
@@ -109,6 +108,11 @@ class Ball extends Thing implements Moveable {
     case 2: 
       fill(255, 127, 0);
     }
+  }
+
+
+  void display() {
+    chooseColor();
     ellipse(x, y, 20, 20);
   }
 
@@ -137,6 +141,26 @@ class Ball extends Thing implements Moveable {
     }
     x+=xinc;
     y+=yinc;
+  }
+}
+
+class GravityBall extends Ball{
+  float gforce, x, y, xinc, yinc;
+  GravityBall(float x, float y){
+    super(x,y);
+    gforce = random(5, 15);
+  }
+  GravityBall(float x, float y, float xinc, float yinc){
+    super(x,y,xinc,yinc);
+    gforce = random(5, 15);
+  }
+  void display(){
+    chooseColor();
+    beginShape();
+    vertex(x, y+15);
+    vertex(x-7.5,y-sqrt(3)*7.5);
+    vertex(x, y-7.5);
+    vertex(x+7.5,y-sqrt(3)*7.5);
   }
 }
 
