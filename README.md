@@ -8,5 +8,5 @@ Elizabeth - Display for Rock
 Tejas - Display for Ball
 
 5/7/19
-Justin and Elizabeth - Rock (will be updated later)
-Tejas and Rachel - Ball (will be updated later)
+Justin and Elizabeth - added rock image, LivingRock eyes
+Tejas and Rachel - ball bounce with randomization
