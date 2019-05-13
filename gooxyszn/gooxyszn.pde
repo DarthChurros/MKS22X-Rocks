@@ -165,7 +165,7 @@ class WavyBall extends Ball {
   void move() {
     super.move();
     x -= xinc;
-    x += 20 * sin(1/speed * y);
+    x += 10 * sin(1/speed * y); //sinusoidal movement
     if (x < 0) {
       x+=width/20;
     } else if (x > width) {
@@ -251,9 +251,13 @@ void setup() {
   for (int i = 0; i < 10; i++) {
     rockimg = (random(1) > 0.5) ? loadImage("rock1.png") : loadImage("rock2.png");
     Ball b;
-    if (i % 3 == 0) {
-      b = new Ball(50+random(width-100), 50+random(height-100), random(10), random(10));
-    } else if (i % 3 == 1) {
+    //if (i % 3 == 0) {
+    //  b = new Ball(50+random(width-100), 50+random(height-100), random(10), random(10));
+    //} else 
+    //Modify the setup to change the ball creation. 
+    //Create half as one of the subclasses, 
+    //and the other half should be the other subclass.
+    if (i % 2 == 1) {
       b = new GravityBall(50+random(width-100), 50+random(height-100), random(10), random(10));
     } else {
       b = new WavyBall(50+random(width-100), 50+random(height - 100), random(10), random(10), random(10, 20));
