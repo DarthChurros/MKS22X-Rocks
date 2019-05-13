@@ -127,6 +127,11 @@ class Ball extends Thing implements Moveable {
     if (y < 0||y>height) {
       yinc=-yinc;
     }
+    collide();
+    x+=xinc;
+    y+=yinc;
+  }
+  void collide() {
     for (Collideable c : listOfCollideables) {
       if (c.isTouching(this)) {
         fill(255, 0, 0);
@@ -138,8 +143,6 @@ class Ball extends Thing implements Moveable {
         timer = 15;
       }
     }
-    x+=xinc;
-    y+=yinc;
   }
 }
 class WavyBall extends Ball {
@@ -160,10 +163,23 @@ class WavyBall extends Ball {
     super.move();
     x -= xinc;
     x += 20 * sin(1/speed * y);
-    if (x < 0){
+    if (x < 0) {
       x+=width/20;
-    }else if (x > width){
+    } else if (x > width) {
       x-=width/20;
+    }
+  }
+  void collide() {
+    for (Collideable c : listOfCollideables) {
+      if (c.isTouching(this)) {
+        fill(0, 255, 0);
+        ellipse(x, y, 30, 30);
+        xinc*=random(-10)/abs(xinc);
+        yinc*=random(-10)/abs(yinc);
+        x+=xinc/abs(xinc)*10;
+        y+=yinc/abs(yinc)*10;
+        timer = 15;
+      }
     }
   }
   void display() {
@@ -189,6 +205,19 @@ class GravityBall extends Ball {
   void move() {
     super.move();
     yinc+= gforce;
+  }
+  void collide() {
+    for (Collideable c : listOfCollideables) {
+      if (c.isTouching(this)) {
+        fill(0, 255, 255);
+        ellipse(x, y, 30, 30);
+        xinc*=random(-10)/abs(xinc);
+        yinc*=random(-10)/abs(yinc);
+        x+=xinc/abs(xinc)*10;
+        y+=yinc/abs(yinc)*10;
+        timer = 15;
+      }
+    }
   }
   void display() {
     chooseColor();
