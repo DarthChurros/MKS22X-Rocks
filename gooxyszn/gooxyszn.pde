@@ -34,35 +34,34 @@ class Rock extends Thing implements Collideable {
     super(x, y);
     this.image = image;
   }
-  
+
   boolean isTouching(Thing other) {
-    return (dist(x,y,other.x,other.y) <= 25);
+    return (dist(x, y, other.x, other.y) <= 25);
   }
 
   void display() {
     /* ONE PERSON WRITE THIS */
     //________rock with moss____
-    image(image, x -25 , y - 25, 50, 50);
+    image(image, x -25, y - 25, 50, 50);
   }
 }
 
 public class LivingRock extends Rock implements Moveable {
   PImage eyeImage;
-  LivingRock(float x, float y,  PImage image, PImage eyeimg) {
+  LivingRock(float x, float y, PImage image, PImage eyeimg) {
     super(x, y, image);
     eyeImage = eyeimg;
-    
   }
   void move() {
     float d = dist(x, y, mouseX, mouseY);
     if (d <= 100) {
-       if (x + 30 <= width && x - 30 >= 0) x += ((x - mouseX) / sq(.15 * d)) ;
+      if (x + 30 <= width && x - 30 >= 0) x += ((x - mouseX) / sq(.15 * d)) ;
       if (y + 20 <= height && y - 20 >= 0)y += ((y - mouseY) / sq(.15 * d)) ;
     }
   }
-  void display(){
-      super.display();
-      image(eyeImage, x -25 , y - 25, 50, 50);
+  void display() {
+    super.display();
+    image(eyeImage, x -25, y - 25, 50, 50);
   }
 }
 
@@ -77,8 +76,8 @@ class Ball extends Thing implements Moveable {
     super(x, y, xinc, yinc);
     col = int(random(3));
   }
-  
-  void chooseColor(){
+
+  void chooseColor() {
     if (timer > 0) {
       fill(255, 0, 0);
       ellipse(x, y, 30, 30);
@@ -143,28 +142,61 @@ class Ball extends Thing implements Moveable {
     y+=yinc;
   }
 }
-
-class GravityBall extends Ball{
-  float gforce;
-  GravityBall(float x, float y){
-    super(x,y);
-    gforce = random(0.7);
+class WavyBall extends Ball {
+  float speed;
+  WavyBall(float x, float y) {
+    super(x, y);
+    float speed = random(10, 20);
   }
-  GravityBall(float x, float y, float xinc, float yinc){
-    super(x,y,xinc,yinc);
-    gforce = random(0.7);
+  WavyBall(float x, float y, float xinc, float yinc) {
+    super(x, y, xinc, yinc);
+    float speed = random(10, 20);
   }
-  void move(){
+  WavyBall(float x, float y, float xinc, float yinc, float speed) {
+    super(x, y, xinc, yinc);
+    this.speed = speed;
+  }
+  void move() {
     super.move();
-    yinc+= gforce;
+    x -= xinc;
+    x += 20 * sin(1/speed * y);
+    if (x < 0){
+      x+=width/20;
+    }else if (x > width){
+      x-=width/20;
+    }
   }
-  void display(){
+  void display() {
     chooseColor();
     beginShape();
     vertex(x, y+15);
-    vertex(x-7.5,y-sqrt(3)*7.5);
+    vertex(x+7.5, y+7.5);
+    vertex(x+15, y);
+    vertex(x-15, y-15);
+    endShape(CLOSE);
+  }
+}
+class GravityBall extends Ball {
+  float gforce;
+  GravityBall(float x, float y) {
+    super(x, y);
+    gforce = random(0.7);
+  }
+  GravityBall(float x, float y, float xinc, float yinc) {
+    super(x, y, xinc, yinc);
+    gforce = random(0.7);
+  }
+  void move() {
+    super.move();
+    yinc+= gforce;
+  }
+  void display() {
+    chooseColor();
+    beginShape();
+    vertex(x, y+15);
+    vertex(x-7.5, y-sqrt(3)*7.5);
     vertex(x, y-7.5);
-    vertex(x+7.5,y-sqrt(3)*7.5);
+    vertex(x+7.5, y-sqrt(3)*7.5);
     endShape(CLOSE);
   }
 }
@@ -180,17 +212,19 @@ void setup() {
 
   thingsToDisplay = new ArrayList<Displayable>();
   thingsToMove = new ArrayList<Moveable>();
-    PImage rockimg;
-    PImage eyeimg;
-    eyeimg = loadImage("eyes.png");
+  PImage rockimg;
+  PImage eyeimg;
+  eyeimg = loadImage("eyes.png");
   listOfCollideables = new ArrayList<Collideable>();
   for (int i = 0; i < 10; i++) {
     rockimg = (random(1) > 0.5) ? loadImage("rock1.png") : loadImage("rock2.png");
     Ball b;
-    if (i % 2 == 1){
+    if (i % 3 == 0) {
       b = new Ball(50+random(width-100), 50+random(height-100), random(10), random(10));
-    }else{
+    } else if (i % 3 == 1) {
       b = new GravityBall(50+random(width-100), 50+random(height-100), random(10), random(10));
+    } else {
+      b = new WavyBall(50+random(width-100), 50+random(height - 100), random(10), random(10), random(10, 20));
     }
     thingsToDisplay.add(b);
     thingsToMove.add(b);
